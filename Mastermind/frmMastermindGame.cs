@@ -43,7 +43,7 @@ namespace Mastermind
 
         //Upon loading the form, the buttons in each "board" (answerBoard, mainBoard, checkBoard, and givenColorsBoard)
         //Are created and displayed in their respective panels
-        private void frmMastermindGame_Load(object sender, EventArgs e)
+        public void frmMastermindGame_Load(object sender, EventArgs e)
         {
             createAnswerBoard();
             createMainBoard();
@@ -53,7 +53,7 @@ namespace Mastermind
 
         //Creates the array of buttons of length codeLength; sets the background color of each button to be the colors from hiddenAnswer of the Computer class
         //Initializes them to be visible = false until the player either wins or uses up all of his guesses
-        private void createAnswerBoard()
+        public void createAnswerBoard()
         {
             for (int number = 0; number < CODELENGTH; number++)
             {
@@ -69,7 +69,7 @@ namespace Mastermind
 
         //Creates a 2d array of row x col buttons and displays these buttons on the main panel on the form;
         //Disables all of the buttons except the buttons in the first row (the first row buttons will be the initial currentPlayerRow)
-        private void createMainBoard()
+        public void createMainBoard()
         {
             for (int row = 0; row < NUMROWS; row++)
             {
@@ -87,13 +87,13 @@ namespace Mastermind
 
         //Creates a 2d array of row x col buttons and displays these buttons in the panel to the right of the main board
         //All buttons are disabled and the background colors of all of them are initialized to be black (the first row buttons will be the initial currentCheckRow)
-        private void createCheckBoard()
+        public void createCheckBoard()
         {
 
         }
 
         //Creates the 2d array of 2 rows of 4 buttons and initializes each of the button colors to be a color from givenColors in the Colors class
-        private void createColorsBoard()
+        public void createColorsBoard()
         {
 
         }
@@ -101,7 +101,7 @@ namespace Mastermind
         //Calls on the isMatch method of the Computer Class to see if player's guess matches the hiddenAnswer
         //Displays the colored hints in the currentCheckRow if all of the board colors for currentPlayerRow have been set
         //If the row is not finished, player will be asked to finish the row
-        private void btnCheck_Click(object sender, EventArgs e)
+        public void btnCheck_Click(object sender, EventArgs e)
         {
 
         }
@@ -114,7 +114,7 @@ namespace Mastermind
 
 
         //Closes the form when user clicks Exit button
-        private void btnExit_Click(object sender, EventArgs e)
+        public void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }

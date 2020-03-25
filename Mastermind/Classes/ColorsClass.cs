@@ -31,7 +31,7 @@ namespace Mastermind
         }
 
         //Generates the random 4 colors for the hiddenAnswer
-        private void createRandomCode(Color[] hiddenAnswer)
+        public void createRandomCode(Color[] hiddenAnswer)
         {
             Random rand = new Random();
             int i = 0;
@@ -49,7 +49,7 @@ namespace Mastermind
 
         //Looks through chosenAnswerColors array to see if the given index (representing a color at that index in givenColors) has been generated before
         //Returns the value at that index (true or false)
-        private bool checkForDuplicates(int index)
+        public bool checkForDuplicates(int index)
         {
             if(chosenAnswerColors[index] == true)
             {
@@ -64,13 +64,13 @@ namespace Mastermind
 
         //Returns the saved Color that is referenced by colorPicker
         //Aids in setting the color of the button that the player clicked on the main board to the saved color returned by this method (colorPicker)
-        private Color setColorPicked()
+        public Color setColorPicked()
         {
             return colorPicker;
         }
 
         //Gets the color of the button that the player chose from the given colors and assigns the reference to the color to colorPicker
-        private void getColorPicked(Color userPickedColor)
+        public void getColorPicked(Color userPickedColor)
         {
             colorPicker = userPickedColor;
         }

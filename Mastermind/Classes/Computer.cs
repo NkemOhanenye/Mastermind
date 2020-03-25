@@ -1,8 +1,8 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
- * Mastermind Game - Colors Class
+ * Date: 3/25/2020
+ * Mastermind Game - Computer Class
  */
 
 using System;
@@ -31,14 +31,14 @@ namespace Mastermind
         }
 
         //Calls the method from Colors class to generate random colors for the answer
-        private void createAnswer()
+        public void createAnswer()
         {
-           // colorObj.createRandomCode(hiddenAnswer);
+            colorObj.createRandomCode(hiddenAnswer);
         }
 
         //Checks to see if the background colors of each button in currentPlayerRow matches
         //the colors in hiddenAnswer in the correct positions; will return true if every color and positions match or false otherwise
-        private bool isMatch(Button[] currPlayerRow)
+        public bool isMatch(Button[] currPlayerRow)
         {
             bool match = false;
             for(int i = 0; i < hiddenCodeLength; i++)
