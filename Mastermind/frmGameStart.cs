@@ -16,5 +16,17 @@ namespace Mastermind
         {
             InitializeComponent();
         }
+
+        private void btnHowToPlay_Click(object sender, EventArgs e)
+        {
+            Form InstructionForm = new frmHowToPlay();
+            InstructionForm.ShowDialog();
+        }
+
+        private void btnPlayMastermind_Click(object sender, EventArgs e)
+        {
+            Form PlayGame = new frmMastermindGame();
+            PlayGame.ShowDialog();
+        }
     }
 }
