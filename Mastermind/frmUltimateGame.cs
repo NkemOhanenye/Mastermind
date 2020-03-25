@@ -1,8 +1,8 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
- * Mastermind Game - Main Form Class
+ * Date: 3/25/2020
+ * Mastermind Game - Ultimate Form
  */
 
 using System;
@@ -15,31 +15,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 //Notes: for the hints, red means the color is a correct color and in correct position, white means the color is correct but in the wrong position, black if wrong
 namespace Mastermind
 {
-    public partial class frmMastermindGame : Form
+    public partial class frmUltimateGame : Form
     {
-        private const int CODELENGTH = 4;  //the size of the answer (number of colored marbles, or colored buttons in our case, in the answer); An option we would like to incorporate: player chooses the codeLength.
-        private const int NUMROWS = 10;    //number of rows for the main board and check board; default is 10
+        private const int CODELENGTH = 5;  //the size of the answer (number of colored marbles, or colored buttons in our case, in the answer); An option we would like to incorporate: player chooses the codeLength.
+        private const int NUMROWS = 12;    //number of rows for the main board and check board; default is 12
 
         private Button[] answerBoard = new Button[CODELENGTH]; //an array of buttons of size codeLength
         private Button[,] mainBoard = new Button[NUMROWS, CODELENGTH];  //2d array of buttons representing the board where the player will place his/her guesses
         private Button[,] checkBoard = new Button[NUMROWS, CODELENGTH]; //2d array of buttons representing the board which will give hints to indicate whether the player’s guessed colors are correct and in the right position
         private Button[,] givenColorsBoard = new Button[2, 4];   //2d array of buttons with two rows of 4 to represent the given colors the player can choose from
 
-
-        //Constructor that creates a new game form
-        public frmMastermindGame()
+        public frmUltimateGame()
         {
             InitializeComponent();
         }
 
-
         //Upon loading the form, the buttons in each "board" (answerBoard, mainBoard, checkBoard, and givenColorsBoard)
         //Are created and displayed in their respective panels
-        private void frmMastermindGame_Load(object sender, EventArgs e)
+        private void frmUltimateGame_Load(object sender, EventArgs e)
         {
             createAnswerBoard();
             createMainBoard();
@@ -84,7 +80,7 @@ namespace Mastermind
 
 
         //Button click event for all buttons in the givenColorsBoard (to find which colored button is clicked)
-        
+
         //Button click event for all of the buttons in mainBoard (to find which button on the board that the player clicked)
 
 
@@ -94,7 +90,5 @@ namespace Mastermind
         {
             this.Close();
         }
-
-
     }
 }

@@ -1,11 +1,4 @@
-﻿/*
- * Nkem Ohanenye, Tracy Lan
- * CIS 3309 Section 001
- * Date: 3/25/2020
- * Mastermind Game - How To Play Form
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,12 +15,6 @@ namespace Mastermind
         public frmHowToPlay()
         {
             InitializeComponent();
-        }
-
-        // closes the form when the user is done reading the rules
-        private void btnDone_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

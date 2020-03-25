@@ -46,8 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ColorsClass.cs" />
-    <Compile Include="Classes\Computer.cs" />
     <Compile Include="frmGameStart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,8 +64,6 @@
     <Compile Include="frmMastermindGame.Designer.cs">
       <DependentUpon>frmMastermindGame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Hints.cs" />
-    <Compile Include="Classes\PlayerBoard.cs" />
     <Compile Include="frmUltimateGame.cs">
       <SubType>Form</SubType>
     </Compile>
