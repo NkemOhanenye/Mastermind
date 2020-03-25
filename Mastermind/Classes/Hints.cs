@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
+ * Date: 3/25/2020
  * Mastermind Game - Hints Generator Class
  */
 
@@ -35,7 +35,7 @@ namespace Mastermind
 
         //Loops through the colors in currentPlayerRow and increases either numPerfectGuess or numOKGuess
         //If a color appears in colorsSeen, neither of the counts are incremented as this color is a duplicate
-        private void countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
+        public void countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
         {
             int i = 0;
             while(i < hiddenAnswer.Length && !isSeen(currentPlayerRow[i].BackColor))     //while i is less than the length of the answer AND the color of the button at i has not been seen before
@@ -55,7 +55,7 @@ namespace Mastermind
 
         //Goes through colorsSeen to see if a color from currentPlayerRow has appeared before
         //Returns true if the color is in colorsSeen; returns false if otherwise but also adds the new color to colorsSeen
-        private bool isSeen(Color playersGuess)
+        public bool isSeen(Color playersGuess)
         {
             for (int i = 0; i < colorsSeen.Length; i++)
             {
@@ -73,7 +73,7 @@ namespace Mastermind
         }
 
         //Using the counters, changes the colors of the buttons in currentCheckRow and displays them as hints for the user
-        private void placeHints()
+        public void placeHints()
         {
             int index = 0;
             while(numPerfectGuess > 0)
