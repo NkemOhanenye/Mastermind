@@ -559,6 +559,7 @@
             this.button43.TabIndex = 9;
             this.button43.Text = "button43";
             this.button43.UseVisualStyleBackColor = true;
+            this.button43.Visible = false;
             // 
             // button44
             // 
@@ -568,6 +569,7 @@
             this.button44.TabIndex = 8;
             this.button44.Text = "button44";
             this.button44.UseVisualStyleBackColor = true;
+            this.button44.Visible = false;
             // 
             // button46
             // 
@@ -577,6 +579,7 @@
             this.button46.TabIndex = 6;
             this.button46.Text = "button46";
             this.button46.UseVisualStyleBackColor = true;
+            this.button46.Visible = false;
             // 
             // button45
             // 
@@ -586,6 +589,7 @@
             this.button45.TabIndex = 7;
             this.button45.Text = "button45";
             this.button45.UseVisualStyleBackColor = true;
+            this.button45.Visible = false;
             // 
             // pnlCheckBoard
             // 

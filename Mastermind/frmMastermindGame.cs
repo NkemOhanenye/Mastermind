@@ -29,6 +29,10 @@ namespace Mastermind
         private Button[,] checkBoard = new Button[NUMROWS, CODELENGTH]; //2d array of buttons representing the board which will give hints to indicate whether the player’s guessed colors are correct and in the right position
         private Button[,] givenColorsBoard = new Button[2, 4];   //2d array of buttons with two rows of 4 to represent the given colors the player can choose from
 
+        private Size size = new Size(23, 23);
+        private int padding = 50;
+        private Point loc = new Point(0, 25);
+
 
         //Constructor that creates a new game form
         public frmMastermindGame()
@@ -51,14 +55,34 @@ namespace Mastermind
         //Initializes them to be visible = false until the player either wins or uses up all of his guesses
         private void createAnswerBoard()
         {
-
+            for (int number = 0; number < CODELENGTH; number++)
+            {
+                answerBoard[number] = new Button();
+                answerBoard[number].Location = new Point(padding + number * (size.Width + padding), loc.Y);
+                answerBoard[number].Size = size;
+                //answerBoard[number].Enabled = false;
+                answerBoard[number].Name = "btnAnswer" + number.ToString();
+                pnlAnswerBoard.Controls.Add(answerBoard[number]);
+            }
+            //pnlAnswerBoard.Visible = false;
         }
 
         //Creates a 2d array of row x col buttons and displays these buttons on the main panel on the form;
         //Disables all of the buttons except the buttons in the first row (the first row buttons will be the initial currentPlayerRow)
         private void createMainBoard()
         {
-
+            for (int row = 0; row < NUMROWS; row++)
+            {
+                for (int col = 0; col < CODELENGTH; col++)
+                {
+                    //mainBoard[row,col] = new Button();
+                    //mainBoard[row,col].Location = new Point(padding + col * (size.Width + padding) + row, loc.Y);
+                    //mainBoard[row, col].Size = size;
+                    //mainBoard[row, col].Enabled = false;
+                    //mainBoard[row, col].Name = "btnMain" + row.ToString() + col.ToString();
+                    //pnlMainBoard.Controls.Add(mainBoard[row, col]);
+                }
+            }
         }
 
         //Creates a 2d array of row x col buttons and displays these buttons in the panel to the right of the main board

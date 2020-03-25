@@ -36,17 +36,19 @@ namespace Mastermind
         // Displays the Mastermind Classic game
         private void btnPlayMastermind_Click(object sender, EventArgs e)
         {
-            //this.Visible = false; // hides this form when the user wants to play the game 
+            this.Visible = false; // hides this form when the user wants to play the game 
             Form PlayGame = new frmMastermindGame();
             PlayGame.ShowDialog();
+            this.Close();
         }
 
         // Displays the Mastermind Ultimate game
         private void btnPlayUltimate_Click(object sender, EventArgs e)
         {
-            //this.Visible = false; // hides this form when the user wants to play the game 
+            this.Visible = false; // hides this form when the user wants to play the game 
             Form PlayGame = new frmUltimateGame();
             PlayGame.ShowDialog();
+            this.Close();
         }
     }
 }

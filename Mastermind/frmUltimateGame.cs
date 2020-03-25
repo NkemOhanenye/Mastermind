@@ -20,7 +20,7 @@ namespace Mastermind
 {
     public partial class frmUltimateGame : Form
     {
-        private const int CODELENGTH = 5;  //the size of the answer (number of colored marbles, or colored buttons in our case, in the answer); An option we would like to incorporate: player chooses the codeLength.
+        private const int CODELENGTH = 6;  //the size of the answer (number of colored marbles, or colored buttons in our case, in the answer); An option we would like to incorporate: player chooses the codeLength.
         private const int NUMROWS = 12;    //number of rows for the main board and check board; default is 12
 
         private Button[] answerBoard = new Button[CODELENGTH]; //an array of buttons of size codeLength
