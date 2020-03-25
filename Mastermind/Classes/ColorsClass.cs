@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
+ * Date: 3/25/2020
  * Mastermind Game - Colors Class
  */
 
@@ -62,17 +62,17 @@ namespace Mastermind
             }
         }
 
-        //Saves color that the user picked 
-        //Sets colorPicker as the BackColor of the button that the user chose from the givenColorsBoard
-        private void setColorPicked(Color userChoice)
-        {
-            colorPicker = userChoice;
-        }
-
-        //Get the color that the user chose
-        private Color getColorPicked()
+        //Returns the saved Color that is referenced by colorPicker
+        //Aids in setting the color of the button that the player clicked on the main board to the saved color returned by this method (colorPicker)
+        private Color setColorPicked()
         {
             return colorPicker;
+        }
+
+        //Gets the color of the button that the player chose from the given colors and assigns the reference to the color to colorPicker
+        private void getColorPicked(Color userPickedColor)
+        {
+            colorPicker = userPickedColor;
         }
     }
 }

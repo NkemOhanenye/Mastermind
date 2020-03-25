@@ -33,7 +33,7 @@ namespace Mastermind
         //Calls the method from Colors class to generate random colors for the answer
         private void createAnswer()
         {
-            //colorObj.createRandomCode(hiddenAnswer);
+           // colorObj.createRandomCode(hiddenAnswer);
         }
 
         //Checks to see if the background colors of each button in currentPlayerRow matches
