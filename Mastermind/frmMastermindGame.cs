@@ -164,7 +164,6 @@ namespace Mastermind
         // colors to be a color from givenColors in the Colors class
         public void createColorsBoard()
         {
-            ColorsClass given = new ColorsClass();
             int givenColorIndex = 0;
             size = new Size(40, 23);
             for (int row = 0; row < givenColorsBoard.GetUpperBound(0) + 1; row++)
@@ -176,7 +175,7 @@ namespace Mastermind
                     givenColorsBoard[row, col].Location = new Point(col * (size.Width + padding), loc.Y);
                     givenColorsBoard[row, col].Size = size;
                     givenColorsBoard[row, col].Name = "btnColor" + row.ToString() + col.ToString();
-                    givenColorsBoard[row, col].BackColor = given.givenColors[givenColorIndex];
+                    givenColorsBoard[row, col].BackColor = color.givenColors[givenColorIndex];
                     pnlGivenColorsBoard.Controls.Add(givenColorsBoard[row, col]);
                     givenColorIndex++;
                     givenColorsBoard[row, col].Click += new EventHandler(GivenButton_Click);
