@@ -19,7 +19,7 @@ namespace Mastermind
     class Computer
     {
         private int hiddenCodeLength;
-        private Color[] hiddenAnswer;  //each element is a color that makes up the answer code
+        public Color[] hiddenAnswer;  //each element is a color that makes up the answer code
         private ColorsClass colorObj;
 
         //Constructor initializes attributes
@@ -34,6 +34,11 @@ namespace Mastermind
         public void createAnswer()
         {
             colorObj.createRandomCode(hiddenAnswer);
+        }
+
+        public Color[] getAnswer()
+        {      
+            return hiddenAnswer;
         }
 
         //Checks to see if the background colors of each button in currentPlayerRow matches

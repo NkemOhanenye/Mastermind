@@ -39,6 +39,7 @@
             // 
             // pnlMainBoard
             // 
+            this.pnlMainBoard.BackColor = System.Drawing.SystemColors.Control;
             this.pnlMainBoard.Location = new System.Drawing.Point(12, 73);
             this.pnlMainBoard.Name = "pnlMainBoard";
             this.pnlMainBoard.Size = new System.Drawing.Size(252, 512);
