@@ -30,13 +30,15 @@ namespace Mastermind
         private Button[,] checkBoard = new Button[NUMROWS, CODELENGTH]; // 2d array of buttons representing the board which will give hints to indicate whether the player’s guessed colors are correct and in the right position
         private Button[,] givenColorsBoard = new Button[2, 4];   // 2d array of buttons with two rows of 4 to represent the given colors the player can choose from
 
-        // an array of buttons that acts as the currently active row
+        // an array of buttons that acts as the currently active row for the player
         private Button[] currPlayerRow = new Button[CODELENGTH];
         // an array of buttons that acts as the previously active row
         // used to set the previous row disabled
         private Button[] prevPlayerRow = new Button[CODELENGTH];
         private int colIndex = 0; // gets the index to the current index the currPlayerRow is pointing to
         private int currPlayerIndex = 0; // the index for what row the current player is at on the board
+        // an array of buttons that acts as the currently active row for the computer
+        private Button[] currCheckRow = new Button[CODELENGTH];
 
         private Size size = new Size(23, 23); // sets the size for the buttons 
         private int padding = 30; // sets the padding around the buttons
@@ -83,7 +85,6 @@ namespace Mastermind
             cpu.createAnswer();
             for (int col = 0; col < cpu.getAnswer().Length; col++)
                 answerBoard[col].BackColor = cpu.getAnswer()[col];
-            //pnlAnswerBoard.Visible = false;
         }
 
         // Creates a 2d array of row x col buttons and displays these buttons on the main panel on the form;
@@ -105,42 +106,12 @@ namespace Mastermind
                     mainBoard[row, col].Click += new EventHandler(MainButton_Click);
                 }
             }
-            // assigns the original current row
+            // assigns the first row in the 2D array to be the current row
             for (int col = 0; col < CODELENGTH; col++)
             {
                 currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
                 currPlayerRow[colIndex].Enabled = true;
                 colIndex++;
-            }
-        }
-
-        // used to call a method to get the next row, 
-        // if the index has the same value of rows, then the player loses, 
-        // you cant go to the 11th row if there are only 10 
-        public void nextPlayerRow()
-        {
-            if (currPlayerIndex == NUMROWS - 1)
-            {
-                MessageBox.Show("You Lost");
-                // Player loses
-            }
-            else
-            {
-                // disable the last row
-                colIndex = 0;
-                prevPlayerRow = currPlayerRow;
-                for (int col = 0; col < CODELENGTH; col++)
-                    prevPlayerRow[colIndex++].Enabled = false;
-
-                // goes to the next row
-                colIndex = 0;
-                currPlayerIndex++;
-                for (int col = 0; col < CODELENGTH; col++)
-                {
-                    currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
-                    currPlayerRow[colIndex].Enabled = true;
-                    colIndex++;
-                }
             }
         }
 
@@ -162,6 +133,51 @@ namespace Mastermind
                     checkBoard[row, col].Name = "btnCheck" + row.ToString() + col.ToString();
                     checkBoard[row, col].BackColor = Color.Black;
                     pnlCheckBoard.Controls.Add(checkBoard[row, col]);
+                }
+            }
+            // assigns the first row in the 2D array to be the current row
+            colIndex = 0;
+            for (int col = 0; col < CODELENGTH; col++)
+            {
+                currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
+                colIndex++;
+            }
+        }
+
+        // used to call a method to get the next row, 
+        // if the index has the same value of rows, then the player loses, 
+        // you cant go to the 11th row if there are only 10 
+        public void nextRow()
+        {
+            if (currPlayerIndex == NUMROWS - 1)
+            {
+                MessageBox.Show("You Lost");
+                // Player loses
+            }
+            else
+            {
+                // disable the previously used player row
+                colIndex = 0;
+                prevPlayerRow = currPlayerRow;
+                for (int col = 0; col < CODELENGTH; col++)
+                    prevPlayerRow[colIndex++].Enabled = false;
+
+                // goes to the next player row
+                colIndex = 0;
+                currPlayerIndex++;
+                for (int col = 0; col < CODELENGTH; col++)
+                {
+                    currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
+                    currPlayerRow[colIndex].Enabled = true;
+                    colIndex++;
+                }
+
+                // goes to the next check row
+                colIndex = 0;
+                for(int col = 0; col < CODELENGTH; col++)
+                {
+                    currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
+                    colIndex++;
                 }
             }
         }
@@ -238,7 +254,7 @@ namespace Mastermind
                 }
                 else
                 {
-                    nextPlayerRow();
+                    nextRow();
                 }
             }
         }
