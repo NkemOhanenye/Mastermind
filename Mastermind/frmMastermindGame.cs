@@ -42,7 +42,9 @@ namespace Mastermind
         private int padding = 30; // sets the padding around the buttons
         private Point loc = new Point(0, 15); // sets the x,y coordinates for the buttons on the panels
 
+        // creates referance variables of objects of the ColorsClass and the Computer class
         private ColorsClass color = new ColorsClass();
+        private Computer cpu = new Computer(CODELENGTH);
 
 
         // Constructor that creates a new game form
@@ -73,9 +75,14 @@ namespace Mastermind
                 answerBoard[col].Location = new Point(padding + col * (size.Width + padding), loc.Y);
                 answerBoard[col].Size = size;
                 answerBoard[col].Enabled = false;
+                //answerBoard[col].Visible = false;
                 answerBoard[col].Name = "btnAnswer" + col.ToString();
                 pnlAnswerBoard.Controls.Add(answerBoard[col]);
             }
+            // generates the hidden answer
+            cpu.createAnswer();
+            for (int col = 0; col < cpu.getAnswer().Length; col++)
+                answerBoard[col].BackColor = cpu.getAnswer()[col];
             //pnlAnswerBoard.Visible = false;
         }
 
@@ -98,7 +105,6 @@ namespace Mastermind
                     mainBoard[row, col].Click += new EventHandler(MainButton_Click);
                 }
             }
-            
             // assigns the original current row
             for (int col = 0; col < CODELENGTH; col++)
             {
@@ -225,8 +231,7 @@ namespace Mastermind
             }
             if (validCheck == true)
             {
-                Computer com = new Computer(CODELENGTH);
-                if (com.isMatch(currPlayerRow))
+                if (cpu.isMatch(currPlayerRow))
                 {
                     MessageBox.Show("You Win");
                     // Player wins
