@@ -19,7 +19,7 @@ namespace Mastermind
     class Computer
     {
         private int hiddenCodeLength;
-        public Color[] hiddenAnswer;  //each element is a color that makes up the answer code
+        private Color[] hiddenAnswer;  //each element is a color that makes up the answer code
         private ColorsClass colorObj;
 
         //Constructor initializes attributes
