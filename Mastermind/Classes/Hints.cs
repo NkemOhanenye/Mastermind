@@ -46,14 +46,20 @@ namespace Mastermind.Classes
         public int countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
         {
             int i = 0;
-            Color first = currentPlayerRow[0].BackColor,
-                  second = currentPlayerRow[1].BackColor,
-                  third = currentPlayerRow[2].BackColor,
-                  fourth = currentPlayerRow[3].BackColor;
+            int sameColorCount = 1;
+            Color first = currentPlayerRow[0].BackColor;
+
+            for (int j = 1; j < currentPlayerRow.Length; j++)
+            {
+                if (first.Equals(currentPlayerRow[j].BackColor))
+                {
+                    sameColorCount++;
+                }
+            }
 
             //if all the colors in the player's guess are the same and this color is in the answer,
             //increment numPerfectGuess by one since one of those positions is correct
-            if (first.Equals(second) && first.Equals(third) && first.Equals(fourth))
+            if (sameColorCount == currentPlayerRow.Length)
             {
                 if (hiddenAnswer.Contains(first))
                 {

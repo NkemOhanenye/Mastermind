@@ -55,6 +55,7 @@ namespace Mastermind
 
         // creates reference variables of objects of the ColorsClass, the Computer class, the PlayerBoard class and Hints class
         private ColorsClass color = new ColorsClass();
+        //private Computer cpu = new Computer();
         //private Computer cpu = new Computer(CODELENGTH);
         private PlayerBoard playerRow = new PlayerBoard();
         private Hints hintObj = new Hints();
