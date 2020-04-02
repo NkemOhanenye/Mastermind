@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Mastermind
+namespace Mastermind.Classes
 {
     //This class is used to store the answer code for the game and check to see if the user has won or lost. This class will act as the “Mastermind” of the game 
     class Computer

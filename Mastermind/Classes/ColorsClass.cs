@@ -1,8 +1,9 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/25/2020
+ * Created: 3/25/2020
  * Mastermind Game - Colors Class
+ * Last Modified: 4/2/2020
  */
 
 using System;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mastermind
+namespace Mastermind.Classes
 {
     //Contains attributes and methods pertaining to the colors
     //Stores all of the given colors in the game 
@@ -45,6 +46,9 @@ namespace Mastermind
                     i++;                    //only increments if a non-duplicate color is chose; if the color is a duplicate, random will go again
                 }
             }
+            // resets the seen colors for when the form is reset
+            for (int j = 0; j < givenColors.Length; j++)
+                chosenAnswerColors[j] = false;
         }
 
         //Looks through chosenAnswerColors array to see if the given index (representing a color at that index in givenColors) has been generated before
