@@ -1,8 +1,10 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
+ * Date: 4/2/2020
  * Mastermind Game - Main Form Class
+ * 
+ * Some of the code for dynamically creating the buttons is courtesy of Professor Frank Friedman
  */
 
 using System;
@@ -16,8 +18,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 // Notes: for the hints, red means the color is a correct color and in correct position, 
 // white means the color is correct but in the wrong position, black if wrong
+// red always goes before white regardless of position of colors in the player's row; this prevents 
+// the game from being too easy as it does not give away the real position of the color in the answer
 namespace Mastermind
 {
     public partial class frmMastermindGame : Form
@@ -44,9 +49,14 @@ namespace Mastermind
         private int padding = 30; // sets the padding around the buttons
         private Point loc = new Point(0, 15); // sets the x,y coordinates for the buttons on the panels
 
-        // creates referance variables of objects of the ColorsClass and the Computer class
+        // boolean to mark whether duplicates in the answer are allowed
+        private bool allowDuplicates;
+
+        // creates reference variables of objects of the ColorsClass, the Computer class, the PlayerBoard class and Hints class
         private ColorsClass color = new ColorsClass();
         private Computer cpu = new Computer(CODELENGTH);
+        private PlayerBoard playerRow = new PlayerBoard();
+        private Hints hintObj = new Hints();
 
 
         // Constructor that creates a new game form
@@ -56,15 +66,15 @@ namespace Mastermind
         }
 
 
-        // Upon loading the form, the buttons in each "board" (answerBoard, mainBoard, checkBoard, and givenColorsBoard)
-        // Are created and displayed in their respective panels
+        // Upon loading the form, the player will have to choose to allow duplicates
+        // The check button and the boards are not created until the player chooses YES or NO
+        // Label and Check button hidden
         public void frmMastermindGame_Load(object sender, EventArgs e)
         {
-            createAnswerBoard();
-            createMainBoard();
-            createCheckBoard();
-            createColorsBoard();
+            btnCheck.Visible = false;
+            lblPickAColor.Visible = false;
         }
+
 
         // Creates the array of buttons of length codeLength; sets the background color of each button to be 
         // the colors from hiddenAnswer of the Computer class
@@ -77,15 +87,20 @@ namespace Mastermind
                 answerBoard[col].Location = new Point(padding + col * (size.Width + padding), loc.Y);
                 answerBoard[col].Size = size;
                 answerBoard[col].Enabled = false;
-                //answerBoard[col].Visible = false;
                 answerBoard[col].Name = "btnAnswer" + col.ToString();
                 pnlAnswerBoard.Controls.Add(answerBoard[col]);
             }
-            // generates the hidden answer
-            cpu.createAnswer();
-            for (int col = 0; col < cpu.getAnswer().Length; col++)
-                answerBoard[col].BackColor = cpu.getAnswer()[col];
+            // generates the hidden answer and gives the colors to the hidden answer buttons
+            cpu.createAnswer(allowDuplicates);
+            for (int col = 0; col < cpu.getAnswer.Length; col++)
+            {
+                answerBoard[col].BackColor = cpu.getAnswer[col];
+            }
+
+           // pnlAnswerBoard.Visible = false;
+                
         }
+
 
         // Creates a 2d array of row x col buttons and displays these buttons on the main panel on the form;
         // Disables all of the buttons except the buttons in the first row (the first row buttons will be the 
@@ -113,7 +128,11 @@ namespace Mastermind
                 currPlayerRow[colIndex].Enabled = true;
                 colIndex++;
             }
+
+            //stores current row in a PlayerBoard object (to be accessed and used for the hints)
+            playerRow.setPlayerRow(currPlayerRow);
         }
+
 
         // Creates a 2d array of row x col buttons and displays these buttons in the panel to the right of the main board
         // All buttons are disabled and the background colors of all of them are initialized 
@@ -142,45 +161,11 @@ namespace Mastermind
                 currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
                 colIndex++;
             }
+
+            //stores current hint row in a Hints object to be used later for placing hints
+            hintObj.setCheckRow(currCheckRow);
         }
 
-        // used to call a method to get the next row, 
-        // if the index has the same value of rows, then the player loses, 
-        // you cant go to the 11th row if there are only 10 
-        public void nextRow()
-        {
-            if (currPlayerIndex == NUMROWS - 1)
-            {
-                MessageBox.Show("You Lost");
-                // Player loses
-            }
-            else
-            {
-                // disable the previously used player row
-                colIndex = 0;
-                prevPlayerRow = currPlayerRow;
-                for (int col = 0; col < CODELENGTH; col++)
-                    prevPlayerRow[colIndex++].Enabled = false;
-
-                // goes to the next player row
-                colIndex = 0;
-                currPlayerIndex++;
-                for (int col = 0; col < CODELENGTH; col++)
-                {
-                    currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
-                    currPlayerRow[colIndex].Enabled = true;
-                    colIndex++;
-                }
-
-                // goes to the next check row
-                colIndex = 0;
-                for(int col = 0; col < CODELENGTH; col++)
-                {
-                    currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
-                    colIndex++;
-                }
-            }
-        }
 
         // Creates the 2d array of 2 rows of 4 buttons and initializes each of the button 
         // colors to be a color from givenColors in the Colors class
@@ -197,7 +182,7 @@ namespace Mastermind
                     givenColorsBoard[row, col].Location = new Point(col * (size.Width + padding), loc.Y);
                     givenColorsBoard[row, col].Size = size;
                     givenColorsBoard[row, col].Name = "btnColor" + row.ToString() + col.ToString();
-                    givenColorsBoard[row, col].BackColor = color.givenColors[givenColorIndex];
+                    givenColorsBoard[row, col].BackColor = color.getGivenColor(givenColorIndex);
                     pnlGivenColorsBoard.Controls.Add(givenColorsBoard[row, col]);
                     givenColorIndex++;
                     givenColorsBoard[row, col].Click += new EventHandler(GivenButton_Click);
@@ -205,11 +190,58 @@ namespace Mastermind
             }
         }
 
+
+        // Used to call a method to get the next row 
+        // If the player index is equal to the number of rows on the player board, then the player loses; answer is revealed
+        // Player can't go to the 11th row if there are only 10 rows
+        public void nextRow()
+        {
+            if (currPlayerIndex == NUMROWS - 1)
+            {
+                // Player loses
+                pnlAnswerBoard.Visible = true;
+                MessageBox.Show("You Lost");
+                btnCheck.Visible = false;
+            }
+            else
+            {
+                // disable the previously used player row
+                colIndex = 0;
+                prevPlayerRow = currPlayerRow;
+                for (int col = 0; col < CODELENGTH; col++)
+                {
+                    prevPlayerRow[colIndex++].Enabled = false;
+                }
+
+                // goes to the next player row an enables buttons
+                colIndex = 0;
+                currPlayerIndex++;
+                for (int col = 0; col < CODELENGTH; col++)
+                {
+                    currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
+                    currPlayerRow[colIndex].Enabled = true;
+                    colIndex++;
+                }
+                playerRow.setPlayerRow(currPlayerRow);
+
+                // goes to the next check row
+                colIndex = 0;
+                for (int col = 0; col < CODELENGTH; col++)
+                {
+                    currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
+                    colIndex++;
+                }
+                hintObj.setCheckRow(currCheckRow);
+            }
+        }
+
+
         // Convert a charcter to its equivalent integer
         int convertCharToInt(char c)
         {
             return ((int)(c) - (int)('0'));
         } // end convertCharToInt
+
 
         // Button click event for all buttons in the givenColorsBoard (to find which colored button is clicked)
         private void GivenButton_Click(object sender, EventArgs e)
@@ -218,14 +250,16 @@ namespace Mastermind
             int colID = convertCharToInt(((Button)sender).Name[9]);
             color.setColorPicked(givenColorsBoard[rowID, colID].BackColor);
         }
+
         
-        // Button click event for all of the buttons in mainBoard (to find which button on the board that the player clicked)
+        // Button click event for all of the buttons in mainBoard (to find which button on the game board that the player clicked)
         private void MainButton_Click(object sender, EventArgs e)
         {
             int rowID = convertCharToInt(((Button)sender).Name[7]);
             int colID = convertCharToInt(((Button)sender).Name[8]);
             mainBoard[rowID, colID].BackColor = color.getColorPicked();
         }
+
 
         // Calls on the isMatch method of the Computer Class to see if player's guess matches the hiddenAnswer
         // Displays the colored hints in the currentCheckRow if all of the board colors for currentPlayerRow have been set
@@ -247,16 +281,55 @@ namespace Mastermind
             }
             if (validCheck == true)
             {
-                if (cpu.isMatch(currPlayerRow))
+                bool match = cpu.isMatch(playerRow.getCurrentPlayerRow, hintObj);      //places hints on board; returns true if all colors match in the correct position and false otherwise
+                if (match)
                 {
-                    MessageBox.Show("You Win");
                     // Player wins
+                    pnlAnswerBoard.Visible = true;
+                    MessageBox.Show("You Win");
+                    btnCheck.Visible = false;
                 }
                 else
                 {
                     nextRow();
                 }
             }
+        }
+
+
+        //Button click event for allowing duplicates in the answer; creates all of the buttons for the boards
+        private void btnYes_Click(object sender, EventArgs e)
+        {
+            lblAllowDuplicates.Visible = false;
+            btnYes.Visible = false;
+            btnNo.Visible = false;
+            allowDuplicates = true;
+
+            btnCheck.Visible = true;
+            lblPickAColor.Visible = true;
+
+            createAnswerBoard();
+            createMainBoard();
+            createCheckBoard();
+            createColorsBoard();
+        }
+
+
+        //Button click event for not allowing duplicates in the answer; creates all of the buttons for the boards
+        private void btnNo_Click(object sender, EventArgs e)
+        {
+            lblAllowDuplicates.Visible = false;
+            btnYes.Visible = false;
+            btnNo.Visible = false;
+            allowDuplicates = false;
+
+            btnCheck.Visible = true;
+            lblPickAColor.Visible = true;
+
+            createAnswerBoard();
+            createMainBoard();
+            createCheckBoard();
+            createColorsBoard();
         }
 
         //Closes the form when user clicks Exit button

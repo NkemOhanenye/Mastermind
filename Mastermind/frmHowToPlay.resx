@@ -118,18 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label3.Text" xml:space="preserve">
-    <value>Click on the button at the bottom as a choice, then 
-click on a button in the currently active row to change
+    <value>Click on a colored button at the bottom as a choice, and
+then click on a button in the currently active row to change
 the color to the selected color. When you have your
 guess ready, press the check button to check your 
-answer. </value>
+answer. 
+</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>If the entered answer is incorrect, the game will 
-display colors to the side of the last answered row.
+    <value>If the entered guess is incorrect, the game will 
+display a hint to the side of the last answered row.
+Colors for the hint are:
 red - the right color in the right spot
 white - the right color in the right spot
 black - the wrong color
+Red always goes before white regardless of the 
+position of the colors in your guess.
 </value>
   </data>
 </root>
