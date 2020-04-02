@@ -48,6 +48,9 @@
   <ItemGroup>
     <Compile Include="Classes\ColorsClass.cs" />
     <Compile Include="Classes\Computer.cs" />
+    <Compile Include="Components\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmGameStart.cs">
       <SubType>Form</SubType>
     </Compile>

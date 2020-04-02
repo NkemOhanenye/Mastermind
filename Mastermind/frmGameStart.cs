@@ -1,8 +1,9 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/25/2020
+ * Created: 3/24/2020
  * Mastermind Game - Game Start Form
+ * Last Modified: 4/1/2020
  */
 
 using System;
@@ -37,8 +38,8 @@ namespace Mastermind
         private void btnPlayMastermind_Click(object sender, EventArgs e)
         {
             this.Visible = false; // hides this form when the user wants to play the game 
-            Form PlayGame = new frmMastermindGame();
-            PlayGame.ShowDialog();
+            Form playGame = new frmMastermindGame();
+            playGame.ShowDialog();
             this.Close();
         }
 
@@ -46,8 +47,8 @@ namespace Mastermind
         private void btnPlayUltimate_Click(object sender, EventArgs e)
         {
             this.Visible = false; // hides this form when the user wants to play the game 
-            Form PlayGame = new frmUltimateGame();
-            PlayGame.ShowDialog();
+            Form playGame = new frmUltimateGame();
+            playGame.ShowDialog();
             this.Close();
         }
     }

@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/24/2020
+ * Created: 3/24/2020
  * Mastermind Game - Player Board Class
  */
 
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Mastermind
+namespace Mastermind.Classes
 {
     //This class keeps track of the colors that the user places in the current guessing row
     class PlayerBoard

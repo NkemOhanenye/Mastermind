@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Mastermind
+namespace Mastermind.Classes
 {
     //This class keeps track of the number of colors in the currentPlayerRow that are correct color in the correct position
     //and the number of colors that are correct but in the wrong position;

@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mastermind
+namespace Mastermind.Classes
 {
     //Contains attributes and methods pertaining to the colors
     //Stores all of the given colors in the game 
@@ -57,7 +57,6 @@ namespace Mastermind
                     }
                 }
             }
-
         }
 
         //Looks through chosenAnswerColors array to see if the given index (representing a color at that index in givenColors) has been generated before
