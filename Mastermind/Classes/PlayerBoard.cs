@@ -20,7 +20,13 @@ namespace Mastermind.Classes
         private Button[] currentPlayerRow;
 
         //Constructor takes in the row the player places his/her guesses in and sets it as the currentPlayerRow 
-        public PlayerBoard(Button[] currGuessRow)
+        public PlayerBoard()
+        {
+            
+        }
+
+        //Takes in the row the player places his/her guesses in and sets it as the currentPlayerRow
+        public void setPlayerRow (Button[] currGuessRow)
         {
             currentPlayerRow = currGuessRow;
         }
