@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/25/2020
+ * Date: 4/2/2020
  * Mastermind Game - Computer Class
  */
 
@@ -31,34 +31,35 @@ namespace Mastermind
         }
 
         //Calls the method from Colors class to generate random colors for the answer
-        public void createAnswer()
+        public void createAnswer(bool allowDuplicates)
         {
-            colorObj.createRandomCode(hiddenAnswer);
+            colorObj.createRandomCode(hiddenAnswer, allowDuplicates);
         }
 
-        public Color[] getAnswer()
-        {      
-            return hiddenAnswer;
+        
+        public Color[] getAnswer
+        {
+            get
+            {
+                return hiddenAnswer;
+            }
         }
 
-        //Checks to see if the background colors of each button in currentPlayerRow matches
-        //the colors in hiddenAnswer in the correct positions; will return true if every color and positions match or false otherwise
-        public bool isMatch(Button[] currPlayerRow)
+
+        //Checks to see if the number of perfect colors (right color, right position) in the player's guess is equal to the amount of colors in the answer
+        //If the numbers are equal, every color matches perfectly; will return true if every color and positions match or false otherwise
+        public bool isMatch(Button[] currPlayerRow, Hints hintObj)
         {
             bool match = false;
-            for(int i = 0; i < hiddenCodeLength; i++)
+            int numPerfectGuesses = hintObj.countGuesses(hiddenAnswer, currPlayerRow);
+            hintObj.placeHints();
+            if (numPerfectGuesses == hiddenAnswer.Length)
             {
-                if(currPlayerRow[i].BackColor.Equals(hiddenAnswer[i]))
-                {
-                    match = true;
-                }
-                else
-                {
-                    match = false;
-                }
+                match = true;
             }
             return match;
+
         }
-        
+
     }
 }

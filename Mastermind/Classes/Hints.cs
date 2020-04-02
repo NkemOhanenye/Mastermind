@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 3/25/2020
+ * Date: 4/2/2020
  * Mastermind Game - Hints Generator Class
  */
 
@@ -26,64 +26,87 @@ namespace Mastermind
         private int numOKGuess = 0;          //counts number of colors tht are correct but in the wrong position
         private Color[] colorsSeen;        //keeps track of colors that have been seen before in currentPlayerRow
 
-        //Constructor initializes currentCheckRow as the current row of the checkBoard where current hints are suppsoed to go
-        public Hints(Button[] currHintRow)
+        //Constructor 
+        public Hints()
+        {
+
+        }
+
+        //Sets currentCheckRow as the current row of the checkBoard where current hints are supposed to go
+        public void setCheckRow(Button[] currHintRow)
         {
             currentCheckRow = currHintRow;
             colorsSeen = new Color[currentCheckRow.Length];
         }
 
+
         //Loops through the colors in currentPlayerRow and increases either numPerfectGuess or numOKGuess
         //If a color appears in colorsSeen, neither of the counts are incremented as this color is a duplicate
-        public void countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
+        //Returns a count of the number of perfect guesses
+        public int countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
         {
             int i = 0;
-            while(i < hiddenAnswer.Length && !isSeen(currentPlayerRow[i].BackColor))     //while i is less than the length of the answer AND the color of the button at i has not been seen before
+            Color first = currentPlayerRow[0].BackColor,
+                  second = currentPlayerRow[1].BackColor,
+                  third = currentPlayerRow[2].BackColor,
+                  fourth = currentPlayerRow[3].BackColor;
+
+            //if all the colors in the player's guess are the same and this color is in the answer,
+            //increment numPerfectGuess by one since one of those positions is correct
+            if (first.Equals(second) && first.Equals(third) && first.Equals(fourth))
             {
-                if (currentPlayerRow[i].BackColor.Equals(hiddenAnswer[i]))
+                if (hiddenAnswer.Contains(first))
                 {
                     numPerfectGuess++;
                 }
-                else if (hiddenAnswer.Contains(currentPlayerRow[i].BackColor))       //if hiddenAnswer contains the color but not necessarily at the right position
-                {
-                    numOKGuess++;
-                }
-                i++;
             }
-                
+            else
+            {
+                while (i < hiddenAnswer.Length)
+                {
+              
+                    if (currentPlayerRow[i].BackColor.Equals(hiddenAnswer[i]))
+                    {
+                        //if the color in the player's guess has not been seen before, place it in the isSeen array
+                        if (!colorsSeen.Contains(currentPlayerRow[i].BackColor))
+                        {
+                            colorsSeen[i] = currentPlayerRow[i].BackColor;
+                        }
+                        //if the color has been seen elsewhere in the player's guess and numOKGuess was incremented for it, 
+                        //decrement it bc the color is not an OkGuess; it is a PerfectGuess
+                        else if (colorsSeen.Contains(currentPlayerRow[i].BackColor))
+                        {
+                            numOKGuess--;
+                        }
+                        numPerfectGuess++;
+                    }
+                    //if the color is in the answer and also is not seen anywhere else in the player's guess, increment okGuess
+                    else if (hiddenAnswer.Contains(currentPlayerRow[i].BackColor)
+                             && !colorsSeen.Contains(currentPlayerRow[i].BackColor))      //if hiddenAnswer contains the color but not necessarily at the right position
+                    {
+                        colorsSeen[i] = currentPlayerRow[i].BackColor;
+                        numOKGuess++;
+                    }
+                    i++;
+                }
+
+            }
+            return numPerfectGuess;
         }
 
-        //Goes through colorsSeen to see if a color from currentPlayerRow has appeared before
-        //Returns true if the color is in colorsSeen; returns false if otherwise but also adds the new color to colorsSeen
-        public bool isSeen(Color playersGuess)
-        {
-            for (int i = 0; i < colorsSeen.Length; i++)
-            {
-                if (playersGuess.Equals(colorsSeen[i]))
-                {
-                    return true;
-                }
-                else
-                {
-                    colorsSeen[i] = playersGuess;     //if color is not seen in colorsSeen, place it there once and then break to prevent putting the color multiple times
-                    break;
-                }
-            }
-            return false;
-        }
 
         //Using the counters, changes the colors of the buttons in currentCheckRow and displays them as hints for the user
         public void placeHints()
         {
             int index = 0;
-            while(numPerfectGuess > 0)
+            while (numPerfectGuess > 0)
             {
                 currentCheckRow[index].BackColor = Color.Red;
                 numPerfectGuess--;
                 index++;
             }
 
-            while(numOKGuess > 0)
+            while (numOKGuess > 0)
             {
                 currentCheckRow[index].BackColor = Color.White;
                 numOKGuess--;
