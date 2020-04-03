@@ -57,6 +57,9 @@ namespace Mastermind.Classes
                     }
                 }
             }
+            // resets the seen colors for when the form is reset
+            for (int j = 0; j < givenColors.Length; j++)
+                chosenAnswerColors[j] = false;
         }
 
         //Looks through chosenAnswerColors array to see if the given index (representing a color at that index in givenColors) has been generated before
