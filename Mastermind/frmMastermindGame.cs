@@ -28,23 +28,35 @@ namespace Mastermind
 {
     public partial class frmMastermindGame : Form
     {
-        private int codeLength = 4;  // the size of the answer (number of colored marbles, or colored buttons in our case, in the answer); default is 4
-        private int numRows = 10;    // number of rows for the main board and check board; default is 10
+        private int codeLength;  // the size of the answer (number of colored marbles, or colored buttons in our case, in the answer)
+        private int numRows;    // number of rows for the main board and check board
 
-        private Button[] answerBoard; // an array of buttons of size codeLength
-        private Button[,] mainBoard; // 2d array of buttons representing the board where the player will place his/her guesses
-        private Button[,] checkBoard; // 2d array of buttons representing the board which will give hints to indicate whether the player’s guessed colors are correct and in the right position
-        private Button[,] givenColorsBoard = new Button[2, 4];   // 2d array of buttons with two rows of 4 to represent the given colors the player can choose from
+        private Button[] answerBoard;  // a reference variable of a Button array
+        private Button[,] mainBoard;  // 2d reference variable array of buttons representing the board where the player will place his/her guesses
+        private Button[,] checkBoard;  // 2d reference variable array of buttons representing the board which will give hints to indicate whether the player’s guessed colors are correct and in the right position
+        private Button[,] givenColorsBoard = new Button[2, 4];   // 2d reference variable array of buttons with two rows of 4 to represent the given colors the player can choose from
 
-        // an array of buttons that acts as the currently active row for the player
+        // a reference variable array of buttons that acts as the currently active row for the player
         private Button[] currPlayerRow;
-        // an array of buttons that acts as the previously active row
+        // a reference variable array of buttons that acts as the previously active row
         // used to set the previous row disabled
         private Button[] prevPlayerRow;
-        private int colIndex = 0; // gets the index to the current index the currPlayerRow is pointing to
         private int currPlayerIndex = 0; // the index for what row the current player is at on the board
-        // an array of buttons that acts as the currently active row for the computer
+        // a reference variable array of buttons that acts as the currently active row for the computer
         private Button[] currCheckRow;
+        
+        // reference variables for the original size and loactions of the form, boards and panels
+        private int originalFormWidth;
+        private int originalFormHeight;
+        private Size originalAnswerBoardSize;
+        private Size originalMainBoardSize;
+        private Size originalCurrRowColorSize;
+        private Size originalCheckBoardSize;
+        private Point originalGameButtonsLocation;
+        private Point originalCurrRowColorLocation;
+        private Point originalCheckBoardLocation;
+        private Point originalPickAColorLocation;
+        private Point originalGivenColorBoardLocation;
 
         private Size size; // sets the size for the buttons 
         private int padding = 30; // sets the padding around the buttons
@@ -55,8 +67,7 @@ namespace Mastermind
 
         // creates reference variables of objects of the ColorsClass, the Computer class, the PlayerBoard class and Hints class
         private ColorsClass color = new ColorsClass();
-        //private Computer cpu = new Computer();
-        //private Computer cpu = new Computer(CODELENGTH);
+        private Computer cpu;
         private PlayerBoard playerRow = new PlayerBoard();
         private Hints hintObj = new Hints();
 
@@ -68,18 +79,34 @@ namespace Mastermind
         }
 
         // Upon loading the form, the player will have to choose to allow duplicates
+        // instantiates the reference variables of the original size and location of the forms, 
+        // boards and panels
         // The check button and the boards are not created until the player chooses YES or NO
-        // Label and Check button hidden
+        // and then chooses a code length and row length
+        // Label, Check and Reset button hidden
         public void frmMastermindGame_Load(object sender, EventArgs e)
         {
+            originalFormWidth = this.Width;
+            originalFormHeight = this.Height;
+            originalAnswerBoardSize = pnlAnswerBoard.Size;
+            originalMainBoardSize = pnlMainBoard.Size;
+            originalCurrRowColorSize = transPnlCurrRow.Size;
+            originalCheckBoardSize = pnlCheckBoard.Size;
+            originalGameButtonsLocation = pnlGameButtons.Location;
+            originalCurrRowColorLocation = transPnlCurrRow.Location;
+            originalCheckBoardLocation = pnlCheckBoard.Location;
+            originalPickAColorLocation = lblPickAColor.Location;
+            originalGivenColorBoardLocation = pnlGivenColorsBoard.Location;
+
             btnCheck.Visible = false;
+            btnReset.Visible = false;
             lblPickAColor.Visible = false;
         }
 
 
         // Creates the array of buttons of length codeLength; sets the background color of each button to be 
         // the colors from hiddenAnswer of the Computer class
-        // Initializes them to be visible = false until the player either wins or uses up all of his guesses
+        // Initializes the panel to be visible = false until the player either wins or uses up all of his guesses
         public void createAnswerBoard()
         {
             size = new Size(23, 23);
@@ -87,7 +114,7 @@ namespace Mastermind
             for (int col = 0; col < codeLength; col++)
             {
                 answerBoard[col] = new Button();
-                answerBoard[col].Location = new Point((padding / 2 - 3) + col * (size.Width + padding), loc.Y);
+                answerBoard[col].Location = new Point((padding + 5) + col * (size.Width + padding), loc.Y);
                 answerBoard[col].Size = size;
                 answerBoard[col].Enabled = false;
                 answerBoard[col].Name = "btnAnswer" + col.ToString();
@@ -99,9 +126,7 @@ namespace Mastermind
             {
                 answerBoard[col].BackColor = cpu.getAnswer[col];
             }
-
            // pnlAnswerBoard.Visible = false;
-                
         }
 
 
@@ -117,7 +142,7 @@ namespace Mastermind
                 for (int col = 0; col < codeLength; col++)
                 {
                     mainBoard[row, col] = new Button();
-                    mainBoard[row, col].Location = new Point(padding + col * (size.Width + padding), loc.Y);
+                    mainBoard[row, col].Location = new Point((padding + 5) + col * (size.Width + padding), loc.Y);
                     mainBoard[row, col].Size = size;
                     mainBoard[row, col].Enabled = false;
                     mainBoard[row, col].Name = "btnMain" + row.ToString() + col.ToString();
@@ -128,13 +153,11 @@ namespace Mastermind
             // assigns the first row in the 2D array to be the current row
             for (int col = 0; col < codeLength; col++)
             {
-                currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
-                currPlayerRow[colIndex].Enabled = true;
-                currPlayerRow[colIndex].BringToFront();
-                colIndex++;
+                currPlayerRow[col] = mainBoard[currPlayerIndex, col];
+                currPlayerRow[col].Enabled = true;
+                currPlayerRow[col].BringToFront();
             }
-
-            //stores current row in a PlayerBoard object (to be accessed and used for the hints)
+            // stores current row in a PlayerBoard object (to be accessed and used for the hints)
             playerRow.setPlayerRow(currPlayerRow);
         }
 
@@ -160,11 +183,9 @@ namespace Mastermind
                 }
             }
             // assigns the first row in the 2D array to be the current row
-            colIndex = 0;
             for (int col = 0; col < codeLength; col++)
             {
-                currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
-                colIndex++;
+                currCheckRow[col] = checkBoard[currPlayerIndex, col];
             }
 
             //stores current hint row in a Hints object to be used later for placing hints
@@ -205,11 +226,9 @@ namespace Mastermind
             {
                 // the player loses and all the buttons are disabled
                 // the answerBoard is shown to the user
-                colIndex = 0;
                 for (int col = 0; col < codeLength; col++)
                 {
-                    currPlayerRow[colIndex].Enabled = false;
-                    colIndex++;
+                    currPlayerRow[col].Enabled = false;
                 }
                 pnlAnswerBoard.Visible = true;
                 pnlGivenColorsBoard.Enabled = false;
@@ -219,31 +238,29 @@ namespace Mastermind
             else
             {
                 // disable the previously used player row
-                colIndex = 0;
                 prevPlayerRow = currPlayerRow;
 
                 for (int col = 0; col < codeLength; col++)
                 {
 
-                    prevPlayerRow[colIndex++].Enabled = false;
+                    prevPlayerRow[col].Enabled = false;
                 }
 
                 // goes to the next player row an enables buttons
-                colIndex = 0;
                 currPlayerIndex++;
                 for (int col = 0; col < codeLength; col++)
                 {
-                    currPlayerRow[colIndex] = mainBoard[currPlayerIndex, col];
-                    currPlayerRow[colIndex].Enabled = true;
-                    currPlayerRow[colIndex].BringToFront();
-                    currCheckRow[colIndex] = checkBoard[currPlayerIndex, col];
-                    colIndex++;
+                    currPlayerRow[col] = mainBoard[currPlayerIndex, col];
+                    currPlayerRow[col].Enabled = true;
+                    currPlayerRow[col].BringToFront();
+                    currCheckRow[col] = checkBoard[currPlayerIndex, col];
                 }
-                // traverses the current row color to the next active row
-                //loc.Y = currPlayerIndex * (size.Height + padding);
-                //transPnlCurrRow.Location = new Point(17, loc.Y);
                 playerRow.setPlayerRow(currPlayerRow);
                 hintObj.setCheckRow(currCheckRow);
+
+                // traverses the current row color to the next active row
+                loc.Y = currPlayerIndex * (size.Height + padding);
+                transPnlCurrRow.Location = new Point(17, loc.Y);
             }
         }
 
@@ -278,18 +295,20 @@ namespace Mastermind
         // If the row is not finished, player will be asked to finish the row
         public void btnCheck_Click(object sender, EventArgs e)
         {
+            // resets the color in the reference variable
+            color.setColorPicked(Color.Empty);
+
             Boolean validCheck = true;
-            colIndex = 0;
+
             for (int col = 0; col < codeLength; col++) {
-                if (currPlayerRow[colIndex].BackColor == null || 
-                    currPlayerRow[colIndex].BackColor == Color.Empty ||
-                    currPlayerRow[colIndex].BackColor == SystemColors.Control)
+                if (currPlayerRow[col].BackColor == null || 
+                    currPlayerRow[col].BackColor == Color.Empty ||
+                    currPlayerRow[col].BackColor == SystemColors.Control)
                 {
                     MessageBox.Show("Your current row needs to have a color selected for each button.");
                     validCheck = false;
                     break;
                 }
-                colIndex++;
             }
             if (validCheck == true)
             {
@@ -297,11 +316,9 @@ namespace Mastermind
                 if (match)
                 {
                     // Player wins
-                    colIndex = 0;
                     for (int col = 0; col < codeLength; col++)
                     {
-                        currPlayerRow[colIndex].Enabled = false;
-                        colIndex++;
+                        currPlayerRow[col].Enabled = false;
                     }
                     pnlAnswerBoard.Visible = true;
                     pnlGivenColorsBoard.Enabled = false;
@@ -315,7 +332,7 @@ namespace Mastermind
             }
         }
 
-        //Button click event for allowing duplicates in the answer; creates all of the buttons for the boards
+        //Button click event for allowing duplicates in the answer
         private void btnYes_Click(object sender, EventArgs e)
         {
             lblAllowDuplicates.Visible = false;
@@ -323,17 +340,14 @@ namespace Mastermind
             btnNo.Visible = false;
             allowDuplicates = true;
 
-            btnCheck.Visible = true;
-            lblPickAColor.Visible = true;
-
-            createAnswerBoard();
-            createMainBoard();
-            createCheckBoard();
-            createColorsBoard();
+            lblChooseLengths.Visible = true;
+            cmboxAnswerList.Visible = true;
+            cmboxRowList.Visible = true;
+            btnStart.Visible = true;
         }
 
 
-        //Button click event for not allowing duplicates in the answer; creates all of the buttons for the boards
+        //Button click event for not allowing duplicates in the answer
         private void btnNo_Click(object sender, EventArgs e)
         {
             lblAllowDuplicates.Visible = false;
@@ -341,29 +355,241 @@ namespace Mastermind
             btnNo.Visible = false;
             allowDuplicates = false;
 
-            btnCheck.Visible = true;
-            lblPickAColor.Visible = true;
-
-            createAnswerBoard();
-            createMainBoard();
-            createCheckBoard();
-            createColorsBoard();
+            lblChooseLengths.Visible = true;
+            cmboxAnswerList.Visible = true;
+            cmboxRowList.Visible = true;
+            btnStart.Visible = true;
         }
-        
-        private void btnRestart_Click(object sender, EventArgs e)
+
+        // Button click event for initializing the code length and number of rows by user input
+        // initializes all the boards and creates them
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            codeLength = 5;
-            //numRows = 11;
-            colIndex = 0;
+            // the user needs to choose a value 
+            if (cmboxAnswerList.Text == "" || cmboxRowList.Text == "")
+            {
+                MessageBox.Show("You need to pick a value in each box");
+            }
+            else
+            {
+                // verifies if the value chosen is a number
+                try
+                {
+                    codeLength = Convert.ToInt32(cmboxAnswerList.Text);
+                    numRows = Convert.ToInt32(cmboxRowList.Text);
+
+                    // clears the code length is the user didnt want duplicates but the 
+                    // code length was larger than the given colors amount
+                    if (allowDuplicates == false && codeLength > 8)
+                    {
+                        MessageBox.Show("You cant have a code length over 8 if you don't want duplicates");
+                        cmboxAnswerList.Text = null;
+                    }
+                    else
+                    {
+                        // the user inputted code length and number of rows are passed to the boards
+                        // and Computer Class
+                        answerBoard = new Button[codeLength];
+                        mainBoard = new Button[numRows, codeLength];
+                        checkBoard = new Button[numRows, codeLength];
+                        currPlayerRow = new Button[codeLength];
+                        prevPlayerRow = new Button[codeLength];
+                        currCheckRow = new Button[codeLength];
+                        cpu = new Computer(codeLength);
+
+                        lblChooseLengths.Visible = false;
+                        cmboxAnswerList.Visible = false;
+                        cmboxRowList.Visible = false;
+                        btnStart.Visible = false;
+
+                        btnCheck.Visible = true;
+                        btnReset.Visible = true;
+                        lblPickAColor.Visible = true;
+                        transPnlCurrRow.Visible = true;
+
+                        // changes the size of the boards based on the code length and number of rows
+                        changeSizeOfBoards();
+
+                        createAnswerBoard();
+                        createMainBoard();
+                        createCheckBoard();
+                        createColorsBoard();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("You need to choose a valid number in each box");
+                }
+            }
+        }
+
+        // changes the size of the boards and panels based on the amount of rows and columns
+        private void changeSizeOfBoards()
+        {
+            Boolean rowChanged = false;
+            int height = ((numRows * numRows) - padding) - ((numRows/5)*(numRows/4));
+            int width = codeLength * (codeLength * 3);
+            // changes the width and location X
+            if (codeLength > 4)
+            {
+                // form
+                this.Width = this.Width + width;
+                // answer board
+                pnlAnswerBoard.Width = pnlAnswerBoard.Width + width;
+                // game buttons
+                pnlGameButtons.Location = new Point(pnlGameButtons.Location.X + width, 
+                    pnlGameButtons.Location.Y);
+                // main board
+                pnlMainBoard.Width = pnlMainBoard.Width + width;
+                // current row color
+                transPnlCurrRow.Width = transPnlCurrRow.Width + (width + 15);
+                // check board
+                pnlCheckBoard.Location = new Point(pnlCheckBoard.Location.X + width,
+                    pnlCheckBoard.Location.Y);
+                pnlCheckBoard.Width = pnlCheckBoard.Width + (width - (codeLength * codeLength));
+                // given color board
+                lblPickAColor.Location = new Point(lblPickAColor.Location.X + width,
+                    lblPickAColor.Location.Y);
+                pnlGivenColorsBoard.Location = new Point(pnlGivenColorsBoard.Location.X + width,
+                    pnlGivenColorsBoard.Location.Y);
+                if (numRows > 10 && allowDuplicates == true)  // changes the height and location Y
+                {
+                    // form
+                    this.Height = this.Height + height;
+                    // main board
+                    pnlMainBoard.Height = pnlMainBoard.Height + height;
+                    // check board
+                    pnlCheckBoard.Height = pnlCheckBoard.Height + height;
+                    // given color board
+                    lblPickAColor.Location = new Point(lblPickAColor.Location.X,
+                        lblPickAColor.Location.Y + height);
+                    pnlGivenColorsBoard.Location = new Point(pnlGivenColorsBoard.Location.X,
+                        pnlGivenColorsBoard.Location.Y + height);
+                    rowChanged = true;
+                }
+                else if (numRows < 10 && allowDuplicates == true)  // changes the height and location Y
+                {
+                    height = ((numRows / numRows) + padding) + ((numRows / 3) * (numRows / 2));
+                    // form
+                    this.Height = this.Height - height;
+                    // main board
+                    pnlMainBoard.Height = pnlMainBoard.Height - height;
+                    // check board
+                    pnlCheckBoard.Height = pnlCheckBoard.Height - height;
+                    // given color board
+                    lblPickAColor.Location = new Point(lblPickAColor.Location.X,
+                        lblPickAColor.Location.Y - height);
+                    pnlGivenColorsBoard.Location = new Point(pnlGivenColorsBoard.Location.X,
+                        pnlGivenColorsBoard.Location.Y - height);
+                    rowChanged = true;
+                }
+            }
+            // changes the height and location Y only if the code length wasnt changed
+            if (numRows > 10 && rowChanged == false)
+            {
+                // form
+                this.Height = this.Height + height;
+                // main board
+                pnlMainBoard.Height = pnlMainBoard.Height + height;
+                // check board
+                pnlCheckBoard.Height = pnlCheckBoard.Height + height;
+                // given color board
+                lblPickAColor.Location = new Point(lblPickAColor.Location.X,
+                    lblPickAColor.Location.Y + height);
+                pnlGivenColorsBoard.Location = new Point(pnlGivenColorsBoard.Location.X,
+                    pnlGivenColorsBoard.Location.Y + height);
+            }
+            // changes the height and location Y only if the code length wasnt changed
+            if (numRows < 10 && rowChanged == false)
+            {
+                height = ((numRows / numRows) + padding) + ((numRows / 3) * (numRows / 2));
+                // form
+                this.Height = this.Height - height;
+                // main board
+                pnlMainBoard.Height = pnlMainBoard.Height - height;
+                // check board
+                pnlCheckBoard.Height = pnlCheckBoard.Height - height;
+                // given color board
+                lblPickAColor.Location = new Point(lblPickAColor.Location.X,
+                    lblPickAColor.Location.Y - height);
+                pnlGivenColorsBoard.Location = new Point(pnlGivenColorsBoard.Location.X,
+                    pnlGivenColorsBoard.Location.Y - height);
+            }
+        }
+
+        // resets the board if the player wants to start over
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // sets the current player index back to 0
             currPlayerIndex = 0;
 
-            pnlAnswerBoard.Controls.Clear();
-            pnlMainBoard.Controls.Clear();
-            //transPnlCurrRow.Controls.Clear();
+            // resets the comboboxes to null
+            cmboxAnswerList.Text = null;
+            cmboxRowList.Text = null;
+
+            // resizes the form, board and panels back to their original size
+            // relocates all the boards and panels back to their original position
+            pnlAnswerBoard.Size = originalAnswerBoardSize;
+            pnlGameButtons.Location = originalGameButtonsLocation;
+            pnlMainBoard.Size = originalMainBoardSize;
+            transPnlCurrRow.Size = originalCurrRowColorSize;
+            transPnlCurrRow.Location = originalCurrRowColorLocation;
+            pnlCheckBoard.Size = originalCheckBoardSize;
+            pnlCheckBoard.Location = originalCheckBoardLocation;
+            lblPickAColor.Location = originalPickAColorLocation;
+            pnlGivenColorsBoard.Location = originalGivenColorBoardLocation;
+            this.Width = originalFormWidth;
+            this.Height = originalFormHeight;
+
+            // resets the answerBoard and currPlayerRow
+            for (int col = 0; col < codeLength; col++)
+            {
+                pnlAnswerBoard.Controls.Remove(answerBoard[col]);
+                answerBoard[col].Dispose();
+                currPlayerRow[col].Dispose();
+            }
+            // resets the mainBoard
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int col = 0; col < codeLength; col++)
+                {
+                    this.mainBoard[row, col].Click -= new System.EventHandler(this.
+                        MainButton_Click);
+                    pnlMainBoard.Controls.Remove(mainBoard[row, col]);
+                    mainBoard[row, col].Dispose();
+                }
+            }
+            // resets the givenColorsBoard
+            for (int row = 0; row < givenColorsBoard.GetUpperBound(0) + 1; row++)
+            {
+                for (int col = 0; col < givenColorsBoard.GetUpperBound(givenColorsBoard.Rank - 1) + 1; col++)
+                {
+                    this.givenColorsBoard[row, col].Click -= new System.EventHandler(this.
+                        GivenButton_Click);
+                    pnlGivenColorsBoard.Controls.Remove(givenColorsBoard[row, col]);
+                    givenColorsBoard[row, col].Dispose();
+                }
+            }
+
+            // clears all controls in the panels
             pnlCheckBoard.Controls.Clear();
             pnlGivenColorsBoard.Controls.Clear();
 
+            // reloads the form load
             frmMastermindGame_Load(sender, e);
+
+            // resets the state of the board to when the board is first opened
+            transPnlCurrRow.Visible = false;
+            lblAllowDuplicates.Visible = true;
+            btnYes.Visible = true;
+            btnNo.Visible = true;
+            allowDuplicates = false;
+            btnCheck.Visible = false;
+            lblPickAColor.Visible = false;
+
+            // in case the user wins/loses the game the enabled values are reset
+            btnCheck.Enabled = true;
+            pnlGivenColorsBoard.Enabled = true;
         }
 
         //Closes the form when user clicks Exit button

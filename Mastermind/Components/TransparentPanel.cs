@@ -1,9 +1,8 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Created: 4/1/2020
+ * Date: 4/1/2020
  * Mastermind Game - Transparent Current Row Color
- * Last Modified: 4/1/2020
  * 
  * Solution is from: Abdusalam Ben Haj
  * https://stackoverflow.com/questions/4463363/how-can-i-set-the-opacity-or-transparency-of-a-panel-in-winforms

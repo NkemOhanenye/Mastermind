@@ -1,9 +1,8 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Created: 3/25/2020
+ * Date: 3/27/2020
  * Mastermind Game - How To Play Form
- * Last Modified: 3/27/2020
  */
 
 using System;
