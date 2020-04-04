@@ -29,81 +29,76 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHowToPlay));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblDirection1 = new System.Windows.Forms.Label();
+            this.lblDirections = new System.Windows.Forms.Label();
+            this.lblDirection2 = new System.Windows.Forms.Label();
+            this.lblDirection3 = new System.Windows.Forms.Label();
+            this.picboxExplanation = new System.Windows.Forms.PictureBox();
             this.btnDone = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxExplanation)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblDirection1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(272, 23);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(824, 156);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "The goal of the game is to guess the code the \r\nmastermind of the game has set. W" +
+            this.lblDirection1.AutoSize = true;
+            this.lblDirection1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblDirection1.Location = new System.Drawing.Point(136, 12);
+            this.lblDirection1.Name = "lblDirection1";
+            this.lblDirection1.Size = new System.Drawing.Size(427, 88);
+            this.lblDirection1.TabIndex = 0;
+            this.lblDirection1.Text = "The goal of the game is to guess the code the \r\nmastermind of the game has set. W" +
     "ithin the set of \r\nrows given, you will have to guess the mastermind\'s \r\ncode of" +
     " marbles.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblDirection1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label2
+            // lblDirections
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(24, 269);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(183, 39);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Directions:";
+            this.lblDirections.AutoSize = true;
+            this.lblDirections.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblDirections.Location = new System.Drawing.Point(12, 140);
+            this.lblDirections.Name = "lblDirections";
+            this.lblDirections.Size = new System.Drawing.Size(95, 22);
+            this.lblDirections.TabIndex = 1;
+            this.lblDirections.Text = "Directions:";
             // 
-            // label3
+            // lblDirection2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(244, 192);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(906, 195);
-            this.label3.TabIndex = 2;
-            this.label3.Text = resources.GetString("label3.Text");
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblDirection2.AutoSize = true;
+            this.lblDirection2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblDirection2.Location = new System.Drawing.Point(122, 100);
+            this.lblDirection2.Name = "lblDirection2";
+            this.lblDirection2.Size = new System.Drawing.Size(473, 110);
+            this.lblDirection2.TabIndex = 2;
+            this.lblDirection2.Text = resources.GetString("lblDirection2.Text");
+            this.lblDirection2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label4
+            // lblDirection3
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(297, 403);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(780, 312);
-            this.label4.TabIndex = 3;
-            this.label4.Text = resources.GetString("label4.Text");
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblDirection3.AutoSize = true;
+            this.lblDirection3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblDirection3.Location = new System.Drawing.Point(122, 210);
+            this.lblDirection3.Name = "lblDirection3";
+            this.lblDirection3.Size = new System.Drawing.Size(461, 176);
+            this.lblDirection3.TabIndex = 3;
+            this.lblDirection3.Text = resources.GetString("lblDirection3.Text");
+            this.lblDirection3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // pictureBox1
+            // picboxExplanation
             // 
-            this.pictureBox1.Image = global::Mastermind.Properties.Resources.Play_Mastermind;
-            this.pictureBox1.Location = new System.Drawing.Point(1212, 50);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(864, 617);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.picboxExplanation.ErrorImage = null;
+            this.picboxExplanation.Image = ((System.Drawing.Image)(resources.GetObject("picboxExplanation.Image")));
+            this.picboxExplanation.Location = new System.Drawing.Point(606, 26);
+            this.picboxExplanation.Name = "picboxExplanation";
+            this.picboxExplanation.Size = new System.Drawing.Size(432, 321);
+            this.picboxExplanation.TabIndex = 4;
+            this.picboxExplanation.TabStop = false;
             // 
             // btnDone
             // 
             this.btnDone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnDone.Location = new System.Drawing.Point(964, 759);
-            this.btnDone.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnDone.Location = new System.Drawing.Point(482, 395);
             this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(168, 54);
+            this.btnDone.Size = new System.Drawing.Size(84, 28);
             this.btnDone.TabIndex = 5;
             this.btnDone.Text = "Done";
             this.btnDone.UseVisualStyleBackColor = true;
@@ -111,21 +106,20 @@
             // 
             // frmHowToPlay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2114, 838);
+            this.ClientSize = new System.Drawing.Size(1057, 436);
             this.Controls.Add(this.btnDone);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Controls.Add(this.picboxExplanation);
+            this.Controls.Add(this.lblDirection3);
+            this.Controls.Add(this.lblDirection2);
+            this.Controls.Add(this.lblDirections);
+            this.Controls.Add(this.lblDirection1);
             this.Name = "frmHowToPlay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "How to Play";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxExplanation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,11 +127,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblDirection1;
+        private System.Windows.Forms.Label lblDirections;
+        private System.Windows.Forms.Label lblDirection2;
+        private System.Windows.Forms.Label lblDirection3;
+        private System.Windows.Forms.PictureBox picboxExplanation;
         private System.Windows.Forms.Button btnDone;
     }
 }
