@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/2/2020
+ * Date: 4/4/2020
  * Mastermind Game - Computer Class
  */
 
@@ -20,6 +20,7 @@ namespace Mastermind.Classes
     {
         private int hiddenCodeLength;
         private Color[] hiddenAnswer;  //each element is a color that makes up the answer code
+        private Image[] marbles;  // each element is an image that makes up the answer code
         private ColorsClass colorObj;
 
         //Constructor initializes attributes
@@ -27,6 +28,7 @@ namespace Mastermind.Classes
         {
             hiddenCodeLength = codeLength;
             hiddenAnswer = new Color[hiddenCodeLength];
+            marbles = new Image[hiddenCodeLength];
             colorObj = new ColorsClass();
         }
 
@@ -36,7 +38,14 @@ namespace Mastermind.Classes
             colorObj.createRandomCode(hiddenAnswer, allowDuplicates);
         }
 
+        // Calls the copyRandomCode method from Colors class to generate random marbles for the answer
+        public Image[] copyAnswer(Image[] storedMarbles)
+        {
+            colorObj.copyRandomCode(marbles, storedMarbles);
+            return marbles;
+        }
         
+        // returns the hiddenAnswer to be used to color the buttons
         public Color[] getAnswer
         {
             get
@@ -44,7 +53,6 @@ namespace Mastermind.Classes
                 return hiddenAnswer;
             }
         }
-
 
         //Checks to see if the number of perfect colors (right color, right position) in the player's guess is equal to the amount of colors in the answer
         //If the numbers are equal, every color matches perfectly; will return true if every color and positions match or false otherwise
@@ -58,8 +66,6 @@ namespace Mastermind.Classes
                 match = true;
             }
             return match;
-
         }
-
     }
 }

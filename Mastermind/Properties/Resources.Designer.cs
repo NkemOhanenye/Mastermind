@@ -69,15 +69,5 @@ namespace Mastermind.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Play_Mastermind1 {
-            get {
-                object obj = ResourceManager.GetObject("Play-Mastermind1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

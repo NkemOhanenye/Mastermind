@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMastermindGame));
             this.pnlMainBoard = new System.Windows.Forms.Panel();
-            this.transPnlCurrRow = new Mastermind.Components.TransparentPanel();
             this.pnlAnswerBoard = new System.Windows.Forms.Panel();
             this.lblChooseLengths = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
@@ -45,6 +46,8 @@
             this.lblPickAColor = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.pnlGameButtons = new System.Windows.Forms.Panel();
+            this.collectionOfMarbles = new System.Windows.Forms.ImageList(this.components);
+            this.transPnlCurrRow = new Mastermind.Components.TransparentPanel();
             this.pnlMainBoard.SuspendLayout();
             this.pnlAnswerBoard.SuspendLayout();
             this.pnlGameButtons.SuspendLayout();
@@ -58,17 +61,6 @@
             this.pnlMainBoard.Name = "pnlMainBoard";
             this.pnlMainBoard.Size = new System.Drawing.Size(253, 519);
             this.pnlMainBoard.TabIndex = 0;
-            // 
-            // transPnlCurrRow
-            // 
-            this.transPnlCurrRow.BackColor = System.Drawing.Color.Pink;
-            this.transPnlCurrRow.CausesValidation = false;
-            this.transPnlCurrRow.Location = new System.Drawing.Point(19, 2);
-            this.transPnlCurrRow.Margin = new System.Windows.Forms.Padding(2);
-            this.transPnlCurrRow.Name = "transPnlCurrRow";
-            this.transPnlCurrRow.Size = new System.Drawing.Size(208, 35);
-            this.transPnlCurrRow.TabIndex = 0;
-            this.transPnlCurrRow.Visible = false;
             // 
             // pnlAnswerBoard
             // 
@@ -198,9 +190,10 @@
             // 
             // pnlGivenColorsBoard
             // 
+            this.pnlGivenColorsBoard.BackColor = System.Drawing.SystemColors.Control;
             this.pnlGivenColorsBoard.Location = new System.Drawing.Point(86, 613);
             this.pnlGivenColorsBoard.Name = "pnlGivenColorsBoard";
-            this.pnlGivenColorsBoard.Size = new System.Drawing.Size(256, 84);
+            this.pnlGivenColorsBoard.Size = new System.Drawing.Size(224, 97);
             this.pnlGivenColorsBoard.TabIndex = 3;
             // 
             // btnCheck
@@ -254,6 +247,30 @@
             this.pnlGameButtons.Size = new System.Drawing.Size(159, 59);
             this.pnlGameButtons.TabIndex = 8;
             // 
+            // collectionOfMarbles
+            // 
+            this.collectionOfMarbles.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("collectionOfMarbles.ImageStream")));
+            this.collectionOfMarbles.TransparentColor = System.Drawing.Color.Transparent;
+            this.collectionOfMarbles.Images.SetKeyName(0, "red.png");
+            this.collectionOfMarbles.Images.SetKeyName(1, "blue.png");
+            this.collectionOfMarbles.Images.SetKeyName(2, "yellow.png");
+            this.collectionOfMarbles.Images.SetKeyName(3, "green.png");
+            this.collectionOfMarbles.Images.SetKeyName(4, "white.png");
+            this.collectionOfMarbles.Images.SetKeyName(5, "black.png");
+            this.collectionOfMarbles.Images.SetKeyName(6, "brown.png");
+            this.collectionOfMarbles.Images.SetKeyName(7, "orange.png");
+            // 
+            // transPnlCurrRow
+            // 
+            this.transPnlCurrRow.BackColor = System.Drawing.Color.Pink;
+            this.transPnlCurrRow.CausesValidation = false;
+            this.transPnlCurrRow.Location = new System.Drawing.Point(17, 3);
+            this.transPnlCurrRow.Margin = new System.Windows.Forms.Padding(2);
+            this.transPnlCurrRow.Name = "transPnlCurrRow";
+            this.transPnlCurrRow.Size = new System.Drawing.Size(208, 29);
+            this.transPnlCurrRow.TabIndex = 0;
+            this.transPnlCurrRow.Visible = false;
+            // 
             // frmMastermindGame
             // 
             this.AcceptButton = this.btnCheck;
@@ -261,7 +278,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(452, 708);
+            this.ClientSize = new System.Drawing.Size(452, 722);
             this.Controls.Add(this.pnlGameButtons);
             this.Controls.Add(this.pnlCheckBoard);
             this.Controls.Add(this.lblPickAColor);
@@ -300,5 +317,6 @@
         private System.Windows.Forms.Button btnYes;
         private System.Windows.Forms.Button btnNo;
         private System.Windows.Forms.Panel pnlGameButtons;
+        private System.Windows.Forms.ImageList collectionOfMarbles;
     }
 }

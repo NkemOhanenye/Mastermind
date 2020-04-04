@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/2/2020
+ * Date: 4/4/2020
  * Mastermind Game - Hints Generator Class
  */
 
@@ -46,10 +46,10 @@ namespace Mastermind.Classes
         public int countGuesses(Color[] hiddenAnswer, Button[] currentPlayerRow)
         {
             int i = 0;
-            Color first = currentPlayerRow[0].BackColor,
-                  second = currentPlayerRow[1].BackColor,
-                  third = currentPlayerRow[2].BackColor,
-                  fourth = currentPlayerRow[3].BackColor;
+            Color first = currentPlayerRow[0].ForeColor,
+                  second = currentPlayerRow[1].ForeColor,
+                  third = currentPlayerRow[2].ForeColor,
+                  fourth = currentPlayerRow[3].ForeColor;
 
             //if all the colors in the player's guess are the same and this color is in the answer,
             //increment numPerfectGuess by one since one of those positions is correct
@@ -65,26 +65,26 @@ namespace Mastermind.Classes
                 while (i < hiddenAnswer.Length)
                 {
               
-                    if (currentPlayerRow[i].BackColor.Equals(hiddenAnswer[i]))
+                    if (currentPlayerRow[i].ForeColor.Equals(hiddenAnswer[i]))
                     {
                         //if the color in the player's guess has not been seen before, place it in the isSeen array
-                        if (!colorsSeen.Contains(currentPlayerRow[i].BackColor))
+                        if (!colorsSeen.Contains(currentPlayerRow[i].ForeColor))
                         {
-                            colorsSeen[i] = currentPlayerRow[i].BackColor;
+                            colorsSeen[i] = currentPlayerRow[i].ForeColor;
                         }
                         //if the color has been seen elsewhere in the player's guess and numOKGuess was incremented for it, 
                         //decrement it bc the color is not an OkGuess; it is a PerfectGuess
-                        else if (colorsSeen.Contains(currentPlayerRow[i].BackColor))
+                        else if (colorsSeen.Contains(currentPlayerRow[i].ForeColor))
                         {
                             numOKGuess--;
                         }
                         numPerfectGuess++;
                     }
                     //if the color is in the answer and also is not seen anywhere else in the player's guess, increment okGuess
-                    else if (hiddenAnswer.Contains(currentPlayerRow[i].BackColor)
-                             && !colorsSeen.Contains(currentPlayerRow[i].BackColor))      //if hiddenAnswer contains the color but not necessarily at the right position
+                    else if (hiddenAnswer.Contains(currentPlayerRow[i].ForeColor)
+                             && !colorsSeen.Contains(currentPlayerRow[i].ForeColor))      //if hiddenAnswer contains the color but not necessarily at the right position
                     {
-                        colorsSeen[i] = currentPlayerRow[i].BackColor;
+                        colorsSeen[i] = currentPlayerRow[i].ForeColor;
                         numOKGuess++;
                     }
                     i++;
