@@ -23,6 +23,14 @@ namespace Mastermind.Classes
         private Image[] marbles;  // each element is an image that makes up the answer code
         private ColorsClass colorObj;
 
+        //default constructor for testing
+     /*   public Computer()
+        {
+            hiddenCodeLength = 4;
+            hiddenAnswer = new Color[hiddenCodeLength];
+            colorObj = new ColorsClass();
+        }  */
+
         //Constructor initializes attributes
         public Computer(int codeLength)
         {
