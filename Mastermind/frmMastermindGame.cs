@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/4/2020
+ * Date: 4/5/2020
  * Mastermind Game - Main Form Class
  * 
  * Some of the code for dynamically creating the buttons is courtesy of Professor Frank Friedman
@@ -116,6 +116,8 @@ namespace Mastermind
             size = new Size(30, 30);
             loc.Y = padding/3;
 
+            // generates the hidden answer and gives the colors and images to the hidden answer buttons
+            cpu.createAnswer(marbles, allowDuplicates);
             for (int col = 0; col < codeLength; col++)
             {
                 answerBoard[col] = new Button();
@@ -123,23 +125,17 @@ namespace Mastermind
                 answerBoard[col].Size = size;
                 answerBoard[col].Enabled = true;
                 answerBoard[col].Name = "btnAnswer" + col.ToString();
+                answerBoard[col].ForeColor = cpu.getAnswer[col];
+                answerBoard[col].Image = cpu.getMarbles[col];
                 // removes button border and style
                 answerBoard[col].TabStop = false;
                 answerBoard[col].FlatStyle = FlatStyle.Flat;
                 answerBoard[col].FlatAppearance.BorderSize = 0;
                 // makes the hover that appears when hovering over the button transparent
+                // removes the click color
                 answerBoard[col].FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 255, 255, 255);
                 answerBoard[col].FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 255, 255, 255);
                 pnlAnswerBoard.Controls.Add(answerBoard[col]);
-            }
-            // generates the hidden answer and gives the colors to the hidden answer buttons
-            // changes the image of each button to a marble
-            cpu.createAnswer(allowDuplicates);
-            Image[] marbleAnswers = cpu.copyAnswer(marbles);
-            for (int col = 0; col < cpu.getAnswer.Length; col++)
-            {
-                answerBoard[col].ForeColor = cpu.getAnswer[col];
-                answerBoard[col].Image = marbleAnswers[col];
             }
             pnlAnswerBoard.Visible = false;
         }
@@ -226,6 +222,8 @@ namespace Mastermind
                     givenColorsBoard[row, col].Size = size;
                     givenColorsBoard[row, col].Name = "btnColor" + row.ToString() + col.ToString();
                     givenColorsBoard[row, col].ForeColor = color.getGivenColor(givenColorIndex);
+                    // changes the image of each button to a marble
+                    givenColorsBoard[row, col].Image = marbles[givenColorIndex];
                     // removes button border and style
                     givenColorsBoard[row, col].TabStop = false;
                     givenColorsBoard[row, col].FlatStyle = FlatStyle.Flat;
@@ -237,16 +235,6 @@ namespace Mastermind
                     givenColorsBoard[row, col].Click += new EventHandler(GivenButton_Click);
                     givenColorsBoard[row, col].MouseEnter += new EventHandler(GivenButton_Enter);
                     givenColorsBoard[row, col].MouseLeave += new EventHandler(GivenButton_Leave);
-                }
-            }
-            givenColorIndex = 0;
-            // changes the image of each button to a marble
-            for (int row = 0; row < givenColorsBoard.GetUpperBound(0) + 1; row++)
-            {
-                for (int col = 0; col < givenColorsBoard.GetUpperBound(givenColorsBoard.Rank - 1) + 1; col++)
-                {
-                    givenColorsBoard[row, col].Image = marbles[givenColorIndex];
-                    givenColorIndex++;
                 }
             }
         }
@@ -393,9 +381,9 @@ namespace Mastermind
             {
                 rowID = 10;
                 colID = convertCharToInt(((Button)sender).Name[9]);
-                if (currPlayerIndex == 11)
+                if (currPlayerIndex >= 11)
                 {
-                    rowID = 11;
+                    rowID = rowID + (currPlayerIndex - rowID);
                     mainBoard[rowID, colID].ForeColor = color.getColorPicked();
                     mainBoard[rowID, colID].Image = color.getMarblePicked();
                     // removes button border and style
@@ -445,9 +433,9 @@ namespace Mastermind
             {
                 rowID = 10;
                 colID = convertCharToInt(((Button)sender).Name[9]);
-                if (currPlayerIndex == 11)
+                if (currPlayerIndex >= 11)
                 {
-                    rowID = 11;
+                    rowID = rowID + (currPlayerIndex - rowID);
                     mainBoard[rowID, colID].FlatAppearance.BorderSize = 1;
                 }
                 else
@@ -470,9 +458,9 @@ namespace Mastermind
             {
                 rowID = 10;
                 colID = convertCharToInt(((Button)sender).Name[9]);
-                if (currPlayerIndex == 11)
+                if (currPlayerIndex >= 11)
                 {
-                    rowID = 11;
+                    rowID = rowID + (currPlayerIndex - rowID);
                     mainBoard[rowID, colID].FlatAppearance.BorderSize = 0;
                 }
                 else
@@ -612,6 +600,7 @@ namespace Mastermind
                         cpu = new Computer(codeLength);
 
                         // initializes the referance variable for the Image array  that holds all the images of marbles
+                        // removes the use of needing a timer
                         marbles = new Image[] { collectionOfMarbles.Images[0],
                             collectionOfMarbles.Images[1], collectionOfMarbles.Images[2],
                             collectionOfMarbles.Images[3], collectionOfMarbles.Images[4],

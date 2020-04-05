@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/4/2020
+ * Date: 4/5/2020
  * Mastermind Game - Computer Class
  */
 
@@ -20,7 +20,7 @@ namespace Mastermind.Classes
     {
         private int hiddenCodeLength;
         private Color[] hiddenAnswer;  //each element is a color that makes up the answer code
-        private Image[] marbles;  // each element is an image that makes up the answer code
+        private Image[] hiddenMarbles;  // each element is an image that makes up the answer code
         private ColorsClass colorObj;
 
 
@@ -29,21 +29,14 @@ namespace Mastermind.Classes
         {
             hiddenCodeLength = codeLength;
             hiddenAnswer = new Color[hiddenCodeLength];
-            marbles = new Image[hiddenCodeLength];
+            hiddenMarbles = new Image[hiddenCodeLength];
             colorObj = new ColorsClass();
         }
 
-        //Calls the method from Colors class to generate random colors for the answer
-        public void createAnswer(bool allowDuplicates)
+        //Calls the method from Colors class to generate random colors and marbles for the answer
+        public void createAnswer(Image[] storedMarbles, bool allowDuplicates)
         {
-            colorObj.createRandomCode(hiddenAnswer, allowDuplicates);
-        }
-
-        // Calls the copyRandomCode method from Colors class to generate random marbles for the answer
-        public Image[] copyAnswer(Image[] storedMarbles)
-        {
-            colorObj.copyRandomCode(marbles, storedMarbles);
-            return marbles;
+            colorObj.createRandomCode(hiddenAnswer, hiddenMarbles, storedMarbles, allowDuplicates);
         }
         
         // returns the hiddenAnswer to be used to color the buttons
@@ -52,6 +45,15 @@ namespace Mastermind.Classes
             get
             {
                 return hiddenAnswer;
+            }
+        }
+
+        // returns the hiddenMarbles to be used to image the buttons
+        public Image[] getMarbles
+        {
+            get
+            {
+                return hiddenMarbles;
             }
         }
 
